@@ -1,43 +1,41 @@
 :root {
-  --bg-deep:   #0d0a2e;
-  --bg-mid:    #1a1150;
-  --bg-glow:   #2d1b8e;
-  --edge-top:    #00e5a0;
-  --edge-right:  #4d9fff;
-  --edge-bottom: #ff4d6d;
-  --edge-left:   #ffd700;
-  --cell-bg:     #1e1654;
-  --cell-hover:  #2a2070;
-  --cell-border: rgba(255,255,255,0.08);
-  --cell-event:  #2b0f5e;
-  --cell-glow:   0 0 12px rgba(255,215,0,0.6);
+  --bg-page:   #f7f6ff;
+  --edge-top:    #00a878;
+  --edge-right:  #1565c0;
+  --edge-bottom: #c62828;
+  --edge-left:   #e65100;
+  --cell-bg:     #ffffff;
+  --cell-hover:  #f5f3ff;
+  --cell-border: rgba(0,0,0,0.07);
+  --cell-event:  #f3e8ff;
+  --cell-glow:   0 0 10px rgba(255,152,0,0.35);
   --btn-primary-top:    #ffdf00;
   --btn-primary-bot:    #ff8800;
-  --btn-primary-shadow: #a85500;
+  --btn-primary-shadow: #b35900;
   --btn-green-top:      #44ff88;
   --btn-green-bot:      #00bb55;
-  --btn-green-shadow:   #006633;
+  --btn-green-shadow:   #007733;
   --btn-red-top:        #ff6680;
   --btn-red-bot:        #cc0033;
   --btn-red-shadow:     #880022;
-  --ink:        #ffffff;
-  --ink-dim:    rgba(255,255,255,0.6);
-  --ink-gold:   #ffe066;
-  --ink-shadow: 0 2px 6px rgba(0,0,0,0.8), 0 0 12px rgba(255,215,0,0.4);
-  --card-bg:    linear-gradient(160deg,#1e1260 0%,#2e1a80 60%,#3a1090 100%);
+  --ink:        #1a1638;
+  --ink-dim:    rgba(26,22,56,0.52);
+  --ink-gold:   #b36a00;
+  --ink-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  --card-bg:    linear-gradient(160deg,#ffffff 0%,#faf5ff 60%,#fff8f0 100%);
   --card-border: linear-gradient(135deg,#ffd700,#ff8800,#ffd700);
-  --card-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 20px rgba(255,215,0,0.2);
+  --card-shadow: 0 8px 28px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.06);
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
-  --gold: #ffd700;
-  --neon-cyan: #00ffcc;
+  --gold: #e08c00;
+  --neon-cyan: #00a878;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: radial-gradient(ellipse at 30% 20%, var(--bg-glow) 0%, var(--bg-mid) 40%, var(--bg-deep) 100%);
+  background: linear-gradient(145deg, #f7f6ff 0%, #f0eeff 50%, #fff8f0 100%);
   color: var(--ink);
   font-family: 'Noto Sans KR', 'Malgun Gothic', system-ui, sans-serif;
   min-height: 100vh;
@@ -54,36 +52,36 @@ body {
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: transform 0.08s, filter 0.08s;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
   box-shadow:
     0 6px 0 var(--btn-primary-shadow),
-    0 8px 16px rgba(0,0,0,0.4),
-    inset 0 2px 4px rgba(255,255,255,0.35);
+    0 8px 16px rgba(0,0,0,0.18),
+    inset 0 2px 4px rgba(255,255,255,0.55);
 }
 .btn-3d::after {
   content: '';
   position: absolute;
   top: 6px; left: 14%; right: 14%; height: 35%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, transparent 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.65) 0%, transparent 100%);
   border-radius: 50%;
   pointer-events: none;
 }
-.btn-3d:hover:not(:disabled) { transform: translateY(-3px); filter: brightness(1.1); }
+.btn-3d:hover:not(:disabled) { transform: translateY(-3px); filter: brightness(1.06); }
 .btn-3d:active:not(:disabled) {
   transform: translateY(4px);
-  box-shadow: 0 2px 0 var(--btn-primary-shadow), 0 4px 8px rgba(0,0,0,0.3),
-              inset 0 2px 4px rgba(255,255,255,0.35);
+  box-shadow: 0 2px 0 var(--btn-primary-shadow), 0 4px 8px rgba(0,0,0,0.15),
+              inset 0 2px 4px rgba(255,255,255,0.55);
 }
-.btn-3d:disabled { opacity: 0.4; cursor: not-allowed; filter: saturate(0.3); }
+.btn-3d:disabled { opacity: 0.38; cursor: not-allowed; filter: saturate(0.3); }
 
-.btn-gold  { background: linear-gradient(180deg, var(--btn-primary-top), var(--btn-primary-bot)); color: #3a2000; }
+.btn-gold  { background: linear-gradient(180deg, var(--btn-primary-top), var(--btn-primary-bot)); color: #3a1a00; }
 .btn-green {
-  background: linear-gradient(180deg, var(--btn-green-top), var(--btn-green-bot)); color: #002a15;
-  box-shadow: 0 6px 0 var(--btn-green-shadow), 0 8px 16px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.35);
+  background: linear-gradient(180deg, var(--btn-green-top), var(--btn-green-bot)); color: #002a10;
+  box-shadow: 0 6px 0 var(--btn-green-shadow), 0 8px 16px rgba(0,0,0,0.18), inset 0 2px 4px rgba(255,255,255,0.55);
 }
 .btn-red {
   background: linear-gradient(180deg, var(--btn-red-top), var(--btn-red-bot)); color: #fff;
-  box-shadow: 0 6px 0 var(--btn-red-shadow), 0 8px 16px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.35);
+  box-shadow: 0 6px 0 var(--btn-red-shadow), 0 8px 16px rgba(0,0,0,0.18), inset 0 2px 4px rgba(255,255,255,0.55);
 }
 
 .text-gold { color: var(--ink-gold); text-shadow: var(--ink-shadow); }
@@ -91,10 +89,10 @@ body {
   font-size: clamp(1.4rem, 5vw, 2.4rem);
   font-weight: 900;
   letter-spacing: -0.02em;
-  background: linear-gradient(180deg, #ffe566 0%, #ffaa00 50%, #ff6600 100%);
+  background: linear-gradient(135deg, #e65100 0%, #ff8800 45%, #ffb300 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 8px rgba(255,160,0,0.7));
+  filter: drop-shadow(0 1px 4px rgba(230,81,0,0.25));
 }
 
 /* Player count selector buttons */
@@ -103,13 +101,13 @@ body {
   border-radius: 999px;
   font-weight: 700;
   font-size: 0.9rem;
-  border: 2px solid rgba(255,215,0,0.4);
+  border: 2px solid rgba(230,81,0,0.3);
   cursor: pointer;
   transition: all 0.15s;
 }
-.count-btn--active { background: var(--gold); color: #3a2000; border-color: var(--gold); }
-.count-btn--inactive { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
-.count-btn--inactive:hover { background: rgba(255,255,255,0.15); }
+.count-btn--active { background: var(--btn-primary-bot); color: #fff; border-color: var(--btn-primary-bot); box-shadow: 0 3px 0 var(--btn-primary-shadow); }
+.count-btn--inactive { background: rgba(26,22,56,0.06); color: var(--ink-dim); }
+.count-btn--inactive:hover { background: rgba(26,22,56,0.12); color: var(--ink); }
 
 @media (max-width: 900px) {
   .game-layout { flex-direction: column !important; align-items: center; }

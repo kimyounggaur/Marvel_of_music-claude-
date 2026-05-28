@@ -78,7 +78,7 @@ export default function App() {
       {/* Player count selector */}
       {state.turnCount === 0 && state.phase === 'READY' && (
         <div style={{ textAlign: 'center', display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
-          <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>플레이어:</span>
+          <span style={{ fontWeight: 700, color: 'rgba(26,22,56,0.65)', fontSize: '0.9rem' }}>플레이어:</span>
           {[1, 2, 3, 4].map(n => (
             <button
               key={n}
@@ -128,7 +128,7 @@ export default function App() {
             className="btn-3d"
             onClick={handleReset}
             style={{
-              background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)',
+              background: 'rgba(26,22,56,0.07)', color: 'rgba(26,22,56,0.5)',
               fontSize: '0.78rem', padding: '0.5em 1em',
               boxShadow: '0 3px 0 rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)',
             }}

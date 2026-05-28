@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
-const SYMBOLS = ['♩','♪','♫','♬','✦','✧','⭐','★'];
-const COLORS = ['#ffd700','#b388ff','#80deea','#f48fb1','#a5d6a7'];
+const SYMBOLS = ['♩','♪','♫','♬','✦','✧','★','♭','♯'];
+const COLORS = ['#7c3aed','#0891b2','#d97706','#dc4f8a','#059669','#2563eb','#ea5a0c'];
 
 interface Orb {
   x: number; y: number; vx: number; vy: number;
@@ -23,7 +23,7 @@ export const BackgroundParticles: React.FC = () => {
       vx: (Math.random() - 0.5) * 0.4,
       vy: -(Math.random() * 0.5 + 0.2),
       size: Math.random() * 14 + 8,
-      opacity: Math.random() * 0.35 + 0.08,
+      opacity: Math.random() * 0.18 + 0.06,
       symbol: SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
       color: COLORS[Math.floor(Math.random() * COLORS.length)],
     }));
