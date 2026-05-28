@@ -109,11 +109,6 @@ body {
 .count-btn--inactive { background: rgba(26,22,56,0.06); color: var(--ink-dim); }
 .count-btn--inactive:hover { background: rgba(26,22,56,0.12); color: var(--ink); }
 
-@media (max-width: 900px) {
-  .game-layout { flex-direction: column !important; align-items: center; }
-  .hud-panel { width: min(94vw, 460px); order: 2; }
-  .board-section { order: 1; }
-}
 @media (max-width: 600px) {
   .cell__index { display: none; }
   .cell__label { font-size: clamp(0.38rem, 1.3vw, 0.6rem); }

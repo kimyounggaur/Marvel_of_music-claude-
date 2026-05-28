@@ -67,7 +67,7 @@ export default function App() {
   const targetIndex = state.activeEvent?.targetIndex;
 
   return (
-    <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+    <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', padding: '0.4rem 0.5rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
       <BackgroundParticles />
 
       {/* Title */}
@@ -94,21 +94,18 @@ export default function App() {
       {/* Player status */}
       <PlayerStatusBar players={state.players} currentPlayer={state.currentPlayer} />
 
-      {/* Main layout */}
-      <div className="game-layout" style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-        {/* Board section */}
-        <div className="board-section" style={{ flex: 1, minWidth: 0 }}>
-          <Board
-            players={state.players}
-            currentPlayer={state.currentPlayer}
-            targetIndex={targetIndex}
-          />
-        </div>
+      {/* Board - full width */}
+      <Board
+        players={state.players}
+        currentPlayer={state.currentPlayer}
+        targetIndex={targetIndex}
+      />
 
-        {/* Side panel */}
-        <div style={{ width: '210px', display: 'flex', flexDirection: 'column', gap: '0.8rem', flexShrink: 0 }}>
-          <DicePanel state={state} onRoll={startRoll} onStep={stepForward} />
+      {/* Controls strip below board */}
+      <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'flex-start', padding: '0.2rem 0' }}>
+        <DicePanel state={state} onRoll={startRoll} onStep={stepForward} />
 
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {lastEventKind && !showCard && state.phase === 'READY' && (
             <button
               className="btn-3d btn-gold"
@@ -121,21 +118,20 @@ export default function App() {
           {showCard && (
             <LearningCard kind={lastEventKind} onClose={() => setShowCard(false)} />
           )}
-
-          <EventLog logs={state.eventLog} />
-
           <button
             className="btn-3d"
             onClick={handleReset}
             style={{
               background: 'rgba(26,22,56,0.07)', color: 'rgba(26,22,56,0.5)',
               fontSize: '0.78rem', padding: '0.5em 1em',
-              boxShadow: '0 3px 0 rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)',
+              boxShadow: '0 3px 0 rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.1)',
             }}
           >
             🔄 게임 리셋
           </button>
         </div>
+
+        <EventLog logs={state.eventLog} />
       </div>
 
       {/* Event overlay */}
