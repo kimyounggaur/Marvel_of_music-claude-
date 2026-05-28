@@ -1,6 +1,6 @@
 .board-wrapper {
   position: relative;
-  width: min(100%, calc(80vh * 1.75));
+  width: min(99vw, calc(74vh * 1.75));
   margin: 0 auto;
   aspect-ratio: 14 / 8;
   border-radius: 20px;
