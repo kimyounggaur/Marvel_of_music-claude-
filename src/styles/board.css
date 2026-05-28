@@ -1,6 +1,6 @@
 .board-wrapper {
   position: relative;
-  width: min(99vw, calc(70vh * 1.75));
+  width: min(100%, calc(80vh * 1.75));
   margin: 0 auto;
   aspect-ratio: 14 / 8;
   border-radius: 20px;
@@ -149,15 +149,6 @@
 .hud-btn-row { display: flex; gap: 0.5rem; }
 .hud-btn { flex: 1; font-size: 0.85rem; padding: 0.7em 0.5em; }
 .hud-hint { font-size: 0.72rem; color: var(--ink-dim); text-align: center; }
-
-@media (max-width: 700px) {
-  .hud-panel {
-    position: sticky; bottom: 0;
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
-    border-bottom: none; z-index: 50;
-    box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
-  }
-}
 
 /* Player status bar */
 .player-status-bar { display: flex; gap: 0.45rem; flex-wrap: wrap; justify-content: center; }

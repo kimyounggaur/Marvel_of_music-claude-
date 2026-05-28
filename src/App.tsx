@@ -67,45 +67,46 @@ export default function App() {
   const targetIndex = state.activeEvent?.targetIndex;
 
   return (
-    <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', padding: '0.4rem 0.5rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+    <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', padding: '0.4rem 0.6rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
       <BackgroundParticles />
 
-      {/* Title */}
-      <h1 style={{ textAlign: 'center', padding: '0.3rem 0' }}>
-        <span className="text-title">반복기호의 마블</span>
-      </h1>
+      {/* Compact header: title + player selector + status bar in one row */}
+      <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <h1 style={{ margin: 0, lineHeight: 1 }}>
+          <span className="text-title">반복기호의 마블</span>
+        </h1>
+        {state.turnCount === 0 && state.phase === 'READY' && (
+          <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+            <span style={{ fontWeight: 700, color: 'rgba(26,22,56,0.55)', fontSize: '0.85rem' }}>플레이어:</span>
+            {[1, 2, 3, 4].map(n => (
+              <button
+                key={n}
+                className={`count-btn ${playerCount === n ? 'count-btn--active' : 'count-btn--inactive'}`}
+                onClick={() => { setPlayerCount(n); dispatch({ type: 'SET_PLAYER_COUNT', count: n }); }}
+              >
+                {n}명
+              </button>
+            ))}
+          </div>
+        )}
+        <PlayerStatusBar players={state.players} currentPlayer={state.currentPlayer} />
+      </div>
 
-      {/* Player count selector */}
-      {state.turnCount === 0 && state.phase === 'READY' && (
-        <div style={{ textAlign: 'center', display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
-          <span style={{ fontWeight: 700, color: 'rgba(26,22,56,0.65)', fontSize: '0.9rem' }}>플레이어:</span>
-          {[1, 2, 3, 4].map(n => (
-            <button
-              key={n}
-              className={`count-btn ${playerCount === n ? 'count-btn--active' : 'count-btn--inactive'}`}
-              onClick={() => { setPlayerCount(n); dispatch({ type: 'SET_PLAYER_COUNT', count: n }); }}
-            >
-              {n}명
-            </button>
-          ))}
+      {/* Main: board (left) + right panel */}
+      <div className="main-layout" style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
+        {/* Board column */}
+        <div className="board-col" style={{ flex: 1, minWidth: 0 }}>
+          <Board
+            players={state.players}
+            currentPlayer={state.currentPlayer}
+            targetIndex={targetIndex}
+          />
         </div>
-      )}
 
-      {/* Player status */}
-      <PlayerStatusBar players={state.players} currentPlayer={state.currentPlayer} />
+        {/* Right panel */}
+        <div className="right-panel" style={{ width: '230px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+          <DicePanel state={state} onRoll={startRoll} onStep={stepForward} />
 
-      {/* Board - full width */}
-      <Board
-        players={state.players}
-        currentPlayer={state.currentPlayer}
-        targetIndex={targetIndex}
-      />
-
-      {/* Controls strip below board */}
-      <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'flex-start', padding: '0.2rem 0' }}>
-        <DicePanel state={state} onRoll={startRoll} onStep={stepForward} />
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {lastEventKind && !showCard && state.phase === 'READY' && (
             <button
               className="btn-3d btn-gold"
@@ -118,6 +119,9 @@ export default function App() {
           {showCard && (
             <LearningCard kind={lastEventKind} onClose={() => setShowCard(false)} />
           )}
+
+          <EventLog logs={state.eventLog} />
+
           <button
             className="btn-3d"
             onClick={handleReset}
@@ -130,8 +134,6 @@ export default function App() {
             🔄 게임 리셋
           </button>
         </div>
-
-        <EventLog logs={state.eventLog} />
       </div>
 
       {/* Event overlay */}
