@@ -110,8 +110,6 @@
 @keyframes hologram-flicker { 0%,100% { opacity: 1; } 25% { opacity: 0.5; } 50% { opacity: 0.85; } 75% { opacity: 0.3; } }
 .fx-wormhole .event-overlay__card { background: linear-gradient(160deg,#ede0ff,#e0e7ff,#f3e8ff); animation: card-slam-in 0.3s, wormhole-spin 1s 0.2s ease-in-out; }
 @keyframes wormhole-spin { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(0.6); } 100% { transform: rotate(360deg) scale(1); } }
-.fx-octave-drop .event-overlay__card { animation: octave-drop 0.8s cubic-bezier(.34,1.56,.64,1); }
-@keyframes octave-drop { 0% { transform: translateY(-80px) scaleY(0.5); opacity: 0; } 100% { transform: translateY(0) scaleY(1); opacity: 1; } }
 .fx-finale .event-overlay__card { animation: card-slam-in 0.5s cubic-bezier(.34,1.56,.64,1), finale-glow 1s 0.5s ease-in-out infinite alternate; }
 @keyframes finale-glow { from { box-shadow: 0 0 10px 5px rgba(255,193,7,0.2), 0 12px 40px rgba(0,0,0,0.12); } to { box-shadow: 0 0 28px 12px rgba(255,193,7,0.45), 0 12px 40px rgba(0,0,0,0.12); } }
 

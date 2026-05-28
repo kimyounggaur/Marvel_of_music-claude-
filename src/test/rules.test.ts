@@ -68,13 +68,6 @@ describe('rules', () => {
     expect(e.targetIndex).toBe(36);
   });
 
-  it('OCTAVE_DOWN at 23 -> MOVE_BACKWARD 8', () => {
-    const e = resolveCellEvent(BOARD, 23);
-    expect(e.type).toBe('MOVE_BACKWARD');
-    expect(e.steps).toBe(8);
-    expect(e.targetIndex).toBe(15);
-  });
-
   it('FINE at 38 -> GAME_FINISH', () => {
     const e = resolveCellEvent(BOARD, 38);
     expect(e.type).toBe('GAME_FINISH');

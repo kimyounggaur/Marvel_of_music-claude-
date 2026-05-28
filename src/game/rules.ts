@@ -91,11 +91,6 @@ export function resolveCellEvent(board: BoardCell[], position: number): Resolved
       return none;
     }
 
-    case 'OCTAVE_DOWN': {
-      const target = getPositionAfterSteps(position, 8, false, BOARD_LEN);
-      return { type: 'MOVE_BACKWARD', sourceIndex: position, targetIndex: target, steps: 8, animationClass: 'fx-octave-drop', kind: cell.kind };
-    }
-
     case 'FINE':
       return { type: 'GAME_FINISH', sourceIndex: position, animationClass: 'fx-finale', kind: cell.kind };
 

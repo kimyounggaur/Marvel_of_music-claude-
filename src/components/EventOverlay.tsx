@@ -13,7 +13,7 @@ const AURA_COLOR_MAP: Partial<Record<string, string>> = {
   MULTI_REST: '#ff8800', REPEAT_END: '#4d9fff', DAL_SEGNO: '#cc88ff',
   CODA: '#00ccff', DA_CAPO: '#ffee00', FIRST_ENDING: '#00ff88',
   FERMATA: '#88ccff', DOUBLE_SEGNO: '#cc44ff', DOUBLE_CODA: '#ff44cc',
-  OCTAVE_DOWN: '#ff4466', FINE: '#ffd700',
+  FINE: '#ffd700',
 };
 
 export const EventOverlay: React.FC<Props> = ({ event, onDismiss }) => {

@@ -7,7 +7,7 @@ export type CellKind =
   | 'FERMATA'
   | 'DOUBLE_SEGNO' | 'DOUBLE_SEGNO_TRIGGER'
   | 'DOUBLE_CODA'
-  | 'OCTAVE_DOWN' | 'FINE';
+  | 'FINE';
 
 export interface BoardCell {
   index: number;

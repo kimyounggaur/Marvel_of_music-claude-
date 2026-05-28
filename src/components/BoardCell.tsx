@@ -12,7 +12,7 @@ interface Props {
 const EVENT_KINDS = new Set([
   'MULTI_REST', 'REPEAT_END', 'DAL_SEGNO', 'CODA', 'DA_CAPO',
   'FIRST_ENDING', 'FERMATA', 'DOUBLE_SEGNO', 'DOUBLE_SEGNO_TRIGGER',
-  'DOUBLE_CODA', 'OCTAVE_DOWN', 'FINE'
+  'DOUBLE_CODA', 'FINE'
 ]);
 
 const IMAGE_MAP: Record<string, string> = {
@@ -24,7 +24,6 @@ const IMAGE_MAP: Record<string, string> = {
   FIRST_ENDING: '/assets/symbols/first-ending.jpg',
   SECOND_ENDING: '/assets/symbols/second-ending.jpg',
   MULTI_REST: '/assets/symbols/multi-rest.png',
-  OCTAVE_DOWN: '/assets/symbols/octave-down.png',
 };
 
 export const BoardCellComp: React.FC<Props> = ({ cell, isCurrent, isTarget, style }) => {
