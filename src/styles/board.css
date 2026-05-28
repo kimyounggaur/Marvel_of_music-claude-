@@ -1,0 +1,287 @@
+.board-wrapper {
+  position: relative;
+  width: min(92vw, 820px);
+  margin: 0 auto;
+  aspect-ratio: 14 / 8;
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: 100%;
+  height: 100%;
+  gap: 2px;
+  background: #e0e0e0;
+  border-radius: var(--radius);
+  border: 3px solid #e0e0e0;
+  overflow: hidden;
+  position: relative;
+}
+
+.board-center {
+  grid-column: 2 / 14;
+  grid-row: 2 / 8;
+  background: linear-gradient(135deg, #fffde7 0%, #e8f5e9 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.7rem, 2vw, 1.2rem);
+  font-weight: 900;
+  color: var(--ink);
+  text-align: center;
+  padding: 0.5rem;
+  user-select: none;
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--board);
+  font-size: clamp(0.4rem, 1.1vw, 0.7rem);
+  font-weight: 700;
+  cursor: default;
+  transition: background 0.2s;
+  overflow: hidden;
+  min-height: 0;
+  min-width: 0;
+}
+
+.cell--top    { border-bottom: 3px solid var(--edge-top); }
+.cell--right  { border-left: 3px solid var(--edge-right); }
+.cell--bottom { border-top: 3px solid var(--edge-bottom); }
+.cell--left   { border-right: 3px solid var(--edge-left); }
+
+.cell--corner { background: #f5f5f5; }
+.cell--start  { background: linear-gradient(135deg, #43c77a22, #43c77a44); }
+.cell--fine   { background: linear-gradient(135deg, #ffd16622, #ffd16644); }
+.cell--fermata { background: linear-gradient(135deg, #4f7cff11, #4f7cff22); }
+
+.cell--event { background: #fff3e0; }
+.cell--target-glow {
+  animation: target-glow 1s ease-in-out infinite alternate;
+}
+.cell--current {
+  outline: 3px solid var(--primary);
+  outline-offset: -3px;
+  animation: cell-pulse 1.2s ease-in-out infinite;
+  z-index: 2;
+}
+
+.cell__label {
+  font-size: clamp(0.5rem, 1.2vw, 0.8rem);
+  text-align: center;
+  line-height: 1.1;
+  word-break: break-all;
+}
+
+.cell__index {
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  font-size: clamp(0.3rem, 0.6vw, 0.5rem);
+  color: #aaa;
+  font-weight: 400;
+}
+
+.cell__img {
+  width: 60%;
+  height: 50%;
+  object-fit: contain;
+}
+
+.cell__marker-badge {
+  position: absolute;
+  bottom: 1px;
+  right: 2px;
+  font-size: 0.5rem;
+  background: rgba(79,124,255,0.15);
+  border-radius: 4px;
+  padding: 0 2px;
+  color: var(--primary);
+}
+
+@keyframes cell-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(79,124,255,0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(79,124,255,0); }
+}
+
+@keyframes target-glow {
+  from { box-shadow: 0 0 4px 2px rgba(255,184,79,0.4); }
+  to   { box-shadow: 0 0 12px 6px rgba(255,184,79,0.8); }
+}
+
+/* Player tokens layer */
+.tokens-layer {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Control panel */
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  min-width: 180px;
+}
+
+.dice-btn {
+  background: linear-gradient(135deg, var(--primary), #7c5cff);
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 0.8em 1.6em;
+}
+
+.step-btn {
+  background: linear-gradient(135deg, var(--success), #2ecc71);
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 0.8em 1.6em;
+}
+
+.remaining-steps {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--primary);
+  text-align: center;
+}
+
+/* Dice cube */
+.dice-cube {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 3px solid var(--primary);
+  border-radius: 12px;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--ink);
+  transition: transform 0.1s;
+  box-shadow: 0 4px 16px rgba(79,124,255,0.2);
+}
+
+.dice-cube--rolling {
+  animation: dice-roll 0.7s ease-in-out;
+}
+
+@keyframes dice-roll {
+  0%   { transform: rotate(0deg) scale(1); }
+  20%  { transform: rotate(90deg) scale(1.1); }
+  40%  { transform: rotate(180deg) scale(0.9); }
+  60%  { transform: rotate(270deg) scale(1.1); }
+  80%  { transform: rotate(360deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Player status */
+.player-status-bar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.player-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3em 0.8em;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 2.5px solid transparent;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.player-chip--active {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(36,48,71,0.15);
+}
+
+/* Event log */
+.event-log {
+  background: rgba(255,255,255,0.85);
+  border-radius: var(--radius);
+  padding: 0.7rem;
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  border: 1.5px solid #e0e0e0;
+}
+
+.event-log__item:first-child {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Learning card */
+.learning-card {
+  background: linear-gradient(135deg, #fff8e8, #fffde7);
+  border: 2px solid var(--secondary);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+  animation: card-pop 0.4s cubic-bezier(.34,1.56,.64,1);
+}
+
+.learning-card__symbol {
+  font-size: 2.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.learning-card__name {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.learning-card__meaning {
+  font-size: 0.85rem;
+  color: var(--ink);
+  margin: 0.3rem 0;
+}
+
+.learning-card__effect {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.learning-card__mnemonic {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.3rem;
+  font-style: italic;
+}
+
+@keyframes card-pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 700px) {
+  .game-layout {
+    flex-direction: column !important;
+  }
+  .step-btn-mobile {
+    position: sticky;
+    bottom: 0.5rem;
+    z-index: 10;
+    font-size: 1.3rem;
+    padding: 1em 2em;
+    width: 100%;
+    max-width: 360px;
+    align-self: center;
+  }
+}
