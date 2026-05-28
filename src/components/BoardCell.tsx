@@ -46,7 +46,6 @@ export const BoardCellComp: React.FC<Props> = ({ cell, isCurrent, isTarget, styl
 
   return (
     <div className={classNames} style={style} title={`${meta.name}: ${meta.effect}`}>
-      <span className="cell__index">{cell.index}</span>
       {imgSrc ? (
         <img
           className="cell__img"
@@ -55,7 +54,7 @@ export const BoardCellComp: React.FC<Props> = ({ cell, isCurrent, isTarget, styl
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
         />
       ) : null}
-      <span className="cell__label">{cell.label}</span>
+      {cell.kind !== 'NORMAL' && <span className="cell__label">{cell.label}</span>}
       {cell.markerOnly && <span className="cell__marker-badge">목표</span>}
     </div>
   );
