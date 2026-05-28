@@ -1,196 +1,122 @@
-/* Event overlays */
-.event-overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 100;
-}
-
-.event-overlay__box {
-  background: rgba(255,255,255,0.95);
-  border-radius: 20px;
-  padding: 1.5rem 2.5rem;
-  text-align: center;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.2);
-  max-width: 340px;
-  animation: overlay-pop 0.3s cubic-bezier(.34,1.56,.64,1);
-}
-
-.event-overlay__emoji { font-size: 3rem; }
-.event-overlay__title { font-size: 1.4rem; font-weight: 900; color: var(--primary); margin: 0.3rem 0; }
-.event-overlay__desc  { font-size: 0.95rem; color: var(--ink); }
-
-@keyframes overlay-pop {
-  from { transform: scale(0.5) translateY(40px); opacity: 0; }
-  to   { transform: scale(1) translateY(0); opacity: 1; }
-}
-
-/* fx-rocket-dash */
-.fx-rocket-dash .event-overlay__box {
-  background: linear-gradient(135deg, #fff8e8, #ffe0b2);
-  border: 3px solid var(--secondary);
-  animation: overlay-pop 0.3s cubic-bezier(.34,1.56,.64,1), rocket-shake 0.5s 0.3s ease-in-out;
-}
-@keyframes rocket-shake {
-  0%,100% { transform: translateX(0); }
-  25%      { transform: translateX(-8px); }
-  75%      { transform: translateX(8px); }
-}
-
-/* fx-rewind */
-.fx-rewind .event-overlay__box {
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-  border: 3px solid #1565c0;
-  animation: overlay-pop 0.3s cubic-bezier(.34,1.56,.64,1), rewind-spin 0.8s 0.2s linear;
-}
-@keyframes rewind-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(-720deg) scale(0.8); }
-}
-
-/* fx-segno-fly */
-.fx-segno-fly .event-overlay__box {
-  background: linear-gradient(135deg, #f3e5f5, #e1bee7);
-  border: 3px solid #7b1fa2;
-  animation: overlay-pop 0.3s cubic-bezier(.34,1.56,.64,1), segno-arc 1s 0.2s ease-in-out;
-}
-@keyframes segno-arc {
-  0%   { transform: translateY(0) rotate(0deg); }
-  50%  { transform: translateY(-60px) rotate(180deg); }
-  100% { transform: translateY(0) rotate(360deg); }
-}
-
-/* fx-coda-portal */
-.fx-coda-portal .event-overlay__box {
-  background: linear-gradient(135deg, #e8eaf6, #c5cae9);
-  border: 3px solid #283593;
-  animation: overlay-pop 0.3s cubic-bezier(.34,1.56,.64,1), portal-pulse 0.6s 0.2s ease-in-out;
-}
-@keyframes portal-pulse {
-  0%,100% { box-shadow: 0 0 0 0 rgba(40,53,147,0.5); }
-  50%      { box-shadow: 0 0 0 20px rgba(40,53,147,0); }
-}
-
-/* fx-spotlight-start */
-.fx-spotlight-start .event-overlay__box {
-  background: linear-gradient(135deg, #fffde7, #fff9c4);
-  border: 3px solid #f57f17;
-  animation: overlay-pop 0.3s cubic-bezier(.34,1.56,.64,1), spotlight-flash 0.4s 0.1s ease;
-}
-@keyframes spotlight-flash {
-  0%,100% { background: linear-gradient(135deg, #fffde7, #fff9c4); }
-  50%      { background: white; }
-}
-
-/* fx-spring-jump */
-.fx-spring-jump .event-overlay__box {
-  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-  border: 3px solid #2e7d32;
-  animation: spring-arc 0.8s cubic-bezier(.34,1.56,.64,1);
-}
-@keyframes spring-arc {
-  0%   { transform: translateY(100px) scale(0.5); opacity: 0; }
-  60%  { transform: translateY(-30px) scale(1.1); opacity: 1; }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-/* fx-ice-freeze */
-.fx-ice-freeze .event-overlay__box {
-  background: linear-gradient(135deg, #e3f2fd, #e1f5fe);
-  border: 3px solid #01579b;
-  animation: overlay-pop 0.3s cubic-bezier(.34,1.56,.64,1), freeze-glow 1s 0.3s ease-in-out;
-}
-@keyframes freeze-glow {
-  0%,100% { box-shadow: 0 0 0 0 rgba(1,87,155,0.3); }
-  50%      { box-shadow: 0 0 30px 10px rgba(1,87,155,0.5); }
-}
-
-/* fx-hologram */
-.fx-hologram .event-overlay__box {
-  background: linear-gradient(135deg, #ede7f6, #d1c4e9);
-  border: 3px solid #4527a0;
-  animation: overlay-pop 0.3s cubic-bezier(.34,1.56,.64,1), hologram-flicker 0.5s 0.2s linear;
-}
-@keyframes hologram-flicker {
-  0%,100% { opacity: 1; }
-  25%      { opacity: 0.4; }
-  50%      { opacity: 0.8; }
-  75%      { opacity: 0.2; }
-}
-
-/* fx-wormhole */
-.fx-wormhole .event-overlay__box {
-  background: linear-gradient(135deg, #0d0d2b, #1a237e);
-  border: 3px solid #7c4dff;
-  color: white;
-  animation: overlay-pop 0.3s cubic-bezier(.34,1.56,.64,1), wormhole-spin 1s 0.2s ease-in-out;
-}
-.fx-wormhole .event-overlay__title { color: #b388ff; }
-@keyframes wormhole-spin {
-  0%   { transform: rotate(0deg) scale(1); }
-  50%  { transform: rotate(180deg) scale(0.6); }
-  100% { transform: rotate(360deg) scale(1); }
-}
-
-/* fx-octave-drop */
-.fx-octave-drop .event-overlay__box {
-  background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-  border: 3px solid #880e4f;
-  animation: octave-drop 0.8s cubic-bezier(.34,1.56,.64,1);
-}
-@keyframes octave-drop {
-  0%   { transform: translateY(-80px) scaleY(0.5); opacity: 0; }
-  100% { transform: translateY(0) scaleY(1); opacity: 1; }
-}
-
-/* fx-finale */
-.fx-finale .event-overlay__box {
-  background: linear-gradient(135deg, #fff9c4, #fffde7);
-  border: 3px solid #f57f17;
-  animation: overlay-pop 0.5s cubic-bezier(.34,1.56,.64,1), finale-glow 1s 0.5s ease-in-out infinite alternate;
-}
-@keyframes finale-glow {
-  from { box-shadow: 0 0 10px 5px rgba(255,193,7,0.4); }
-  to   { box-shadow: 0 0 30px 15px rgba(255,193,7,0.8); }
-}
-
-/* Token hop animation */
+/* Token animations */
 @keyframes token-hop {
-  0%   { transform: translate(var(--tx-start, 0px), var(--ty-start, 0px)) scaleY(0.85); }
-  45%  { transform: translate(var(--tx-mid, 0px), var(--ty-mid, -30px)) scaleY(1.12); }
-  100% { transform: translate(var(--tx-end, 0px), var(--ty-end, 0px)) scaleY(1); }
+  0%   { transform: translate(var(--tx-start,0px), var(--ty-start,0px)) scaleY(0.85); }
+  45%  { transform: translate(var(--tx-mid,0px), var(--ty-mid,-30px)) scaleY(1.12); }
+  100% { transform: translate(var(--tx-end,0px), var(--ty-end,0px)) scaleY(1); }
 }
-
-@keyframes token-idle-bounce {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-4px); }
+@keyframes token-idle-float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
 }
-
 @keyframes token-land-pop {
   0%   { transform: scale(1.4); }
   50%  { transform: scale(0.85); }
   100% { transform: scale(1); }
 }
-
-@keyframes token-freeze {
-  0%, 100% { filter: brightness(1) hue-rotate(0deg); }
-  50%       { filter: brightness(1.3) hue-rotate(180deg); }
+@keyframes aura-pulse {
+  0%,100% { opacity: 0.9; }
+  50%      { opacity: 0.4; }
+}
+@keyframes crown-bob {
+  from { transform: translateY(0px); }
+  to   { transform: translateY(-3px); }
+}
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes card-pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
 }
 
-/* reduced-motion */
+/* Event overlays */
+.event-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(5,2,20,0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+  animation: overlay-bg-in 0.25s ease;
+}
+@keyframes overlay-bg-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.event-overlay__card {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2.2rem;
+  max-width: min(88vw, 380px);
+  text-align: center;
+  box-shadow: var(--card-shadow);
+  animation: card-slam-in 0.4s cubic-bezier(.17,.67,.35,1.3);
+}
+.event-overlay__card::before {
+  content: '';
+  position: absolute; inset: -2px;
+  border-radius: calc(var(--radius-lg) + 2px);
+  background: linear-gradient(135deg,#ffd700,#ff8800,#ffd700,#ff8800);
+  background-size: 200% 200%;
+  z-index: -1;
+  animation: border-shimmer 2s linear infinite;
+}
+@keyframes border-shimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+@keyframes card-slam-in {
+  0%   { transform: scale(0.3) rotate(-8deg); opacity: 0; }
+  70%  { transform: scale(1.08) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.event-overlay__emoji {
+  font-size: 5rem;
+  animation: emoji-spin-in 0.5s cubic-bezier(.34,1.56,.64,1);
+  display: block; margin-bottom: 0.5rem;
+}
+@keyframes emoji-spin-in {
+  from { transform: scale(0) rotate(-180deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.event-overlay__title {
+  font-size: 1.6rem; font-weight: 900;
+  background: linear-gradient(180deg,#ffe566,#ffaa00);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 6px rgba(255,160,0,0.5));
+  margin-bottom: 0.3rem;
+}
+.event-overlay__divider {
+  width: 60%; height: 1px; margin: 0.6rem auto;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.5), transparent);
+}
+.event-overlay__meaning { font-size: 0.9rem; color: rgba(255,255,255,0.85); line-height: 1.5; margin-bottom: 0.4rem; }
+.event-overlay__effect  { font-size: 1rem; font-weight: 900; color: #00ff88; text-shadow: 0 0 12px rgba(0,255,136,0.6); margin-bottom: 0.5rem; }
+.event-overlay__mnemonic { font-size: 0.82rem; color: #ffe9b0; font-style: italic; opacity: 0.85; }
+
+/* Per-symbol animation overrides */
+.fx-rocket-dash .event-overlay__card { border-color: #ff8800; animation: card-slam-in 0.3s cubic-bezier(.34,1.56,.64,1), rocket-shake 0.5s 0.3s ease-in-out; }
+@keyframes rocket-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+
+.fx-rewind .event-overlay__card { background: linear-gradient(160deg,#0d1a3a,#1a2d5e,#0d2040); }
+.fx-segno-fly .event-overlay__card { background: linear-gradient(160deg,#2a0d4a,#4a1a7a,#2a0a50); }
+.fx-coda-portal .event-overlay__card { background: linear-gradient(160deg,#0a1a3a,#1a2a5a,#0a1540); }
+.fx-spotlight-start .event-overlay__card { animation: card-slam-in 0.3s cubic-bezier(.34,1.56,.64,1), spotlight-flash 0.4s 0.1s ease; }
+@keyframes spotlight-flash { 0%,100% { filter: brightness(1); } 50% { filter: brightness(2.5); } }
+.fx-spring-jump .event-overlay__card { animation: spring-arc 0.8s cubic-bezier(.34,1.56,.64,1); }
+@keyframes spring-arc { 0% { transform: translateY(100px) scale(0.5); opacity: 0; } 60% { transform: translateY(-30px) scale(1.1); opacity: 1; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
+.fx-ice-freeze .event-overlay__card { background: linear-gradient(160deg,#0d2a4a,#1a3a6a,#0d2050); animation: card-slam-in 0.3s, freeze-glow 1s 0.3s ease-in-out; }
+@keyframes freeze-glow { 0%,100% { box-shadow: var(--card-shadow); } 50% { box-shadow: 0 0 30px 10px rgba(100,200,255,0.5), var(--card-shadow); } }
+.fx-hologram .event-overlay__card { animation: card-slam-in 0.3s, hologram-flicker 0.5s 0.2s linear; }
+@keyframes hologram-flicker { 0%,100% { opacity: 1; } 25% { opacity: 0.4; } 50% { opacity: 0.8; } 75% { opacity: 0.2; } }
+.fx-wormhole .event-overlay__card { background: linear-gradient(160deg,#0d0d2b,#1a237e,#4a0080); animation: card-slam-in 0.3s, wormhole-spin 1s 0.2s ease-in-out; }
+@keyframes wormhole-spin { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(0.6); } 100% { transform: rotate(360deg) scale(1); } }
+.fx-octave-drop .event-overlay__card { animation: octave-drop 0.8s cubic-bezier(.34,1.56,.64,1); }
+@keyframes octave-drop { 0% { transform: translateY(-80px) scaleY(0.5); opacity: 0; } 100% { transform: translateY(0) scaleY(1); opacity: 1; } }
+.fx-finale .event-overlay__card { animation: card-slam-in 0.5s cubic-bezier(.34,1.56,.64,1), finale-glow 1s 0.5s ease-in-out infinite alternate; }
+@keyframes finale-glow { from { box-shadow: 0 0 10px 5px rgba(255,193,7,0.4), var(--card-shadow); } to { box-shadow: 0 0 30px 15px rgba(255,193,7,0.8), var(--card-shadow); } }
+
 @media (prefers-reduced-motion: reduce) {
-  .event-overlay__box,
-  .fx-rewind .event-overlay__box,
-  .fx-segno-fly .event-overlay__box,
-  .fx-wormhole .event-overlay__box {
-    animation: overlay-pop 0.1s ease !important;
-  }
-  @keyframes overlay-pop {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+  .event-overlay__card, .event-overlay__emoji { animation: overlay-bg-in 0.2s ease !important; }
+  .fx-rocket-dash .event-overlay__card, .fx-rewind .event-overlay__card,
+  .fx-wormhole .event-overlay__card, .fx-hologram .event-overlay__card { animation: overlay-bg-in 0.2s ease !important; }
 }

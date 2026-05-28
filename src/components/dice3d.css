@@ -1,0 +1,42 @@
+.dice3d-scene {
+  width: 64px; height: 64px;
+  perspective: 300px;
+  margin: 0 auto;
+}
+.dice3d {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(-25deg) rotateY(20deg);
+  transition: transform 0.05s;
+  will-change: transform;
+}
+.dice3d--rolling .dice3d {
+  animation: dice3d-roll 0.7s cubic-bezier(.4,0,.2,1);
+}
+@keyframes dice3d-roll {
+  0%   { transform: rotateX(0)      rotateY(0)      rotateZ(0); }
+  30%  { transform: rotateX(180deg) rotateY(90deg)  rotateZ(45deg); }
+  60%  { transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg); }
+  100% { transform: rotateX(-25deg) rotateY(20deg)  rotateZ(0); }
+}
+.dice3d__face {
+  position: absolute;
+  width: 64px; height: 64px;
+  border-radius: 10px;
+  background: linear-gradient(135deg,#fffde7,#fff3c4);
+  border: 2px solid #e8c800;
+  box-shadow: inset 0 2px 6px rgba(255,255,255,0.8), inset 0 -2px 6px rgba(200,160,0,0.3);
+}
+.dice3d__face--front  { transform: rotateY(0deg)   translateZ(32px); }
+.dice3d__face--back   { transform: rotateY(180deg) translateZ(32px); }
+.dice3d__face--right  { transform: rotateY(90deg)  translateZ(32px); }
+.dice3d__face--left   { transform: rotateY(-90deg) translateZ(32px); }
+.dice3d__face--top    { transform: rotateX(90deg)  translateZ(32px); }
+.dice3d__face--bottom { transform: rotateX(-90deg) translateZ(32px); }
+.dice3d__dot {
+  position: absolute; width: 10px; height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,#555,#111);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.3);
+}

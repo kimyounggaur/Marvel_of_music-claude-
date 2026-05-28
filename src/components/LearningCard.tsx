@@ -15,13 +15,16 @@ export const LearningCard: React.FC<Props> = ({ kind, onClose }) => {
   return (
     <div className="learning-card">
       <div className="learning-card__symbol">{meta.emoji}</div>
-      <div className="learning-card__name">{meta.name} ({meta.nameEn})</div>
+      <div className="learning-card__name">{meta.name}</div>
+      <div className="learning-card__name-en">{meta.nameEn}</div>
+      <div className="learning-card__divider" />
       <div className="learning-card__meaning">{meta.meaning}</div>
       <div className="learning-card__effect">🎮 {meta.effect}</div>
       <div className="learning-card__mnemonic">💡 {meta.mnemonic}</div>
       <button
+        className="btn-3d btn-gold"
         onClick={onClose}
-        style={{ marginTop: '0.8rem', background: 'var(--primary)', color: 'white', fontSize: '0.85rem' }}
+        style={{ marginTop: '0.8rem', fontSize: '0.85rem', padding: '0.5em 1.2em' }}
         aria-label="계속하기"
       >
         계속하기

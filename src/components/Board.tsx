@@ -70,13 +70,12 @@ export const Board: React.FC<Props> = ({ players, currentPlayer, targetIndex }) 
         {cellElements}
         {/* Center area */}
         <div className="board-center" style={{ gridColumn: '2 / 14', gridRow: '2 / 8' }}>
-          <div>
-            <div style={{ fontSize: 'clamp(1rem, 3vw, 1.8rem)', fontWeight: 900, marginBottom: '0.3rem' }}>
-              🎵 반복기호의 마블
-            </div>
-            <div style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.9rem)', color: '#666' }}>
-              음악 기호를 배우며 보드게임을!
-            </div>
+          <svg width="48" height="48" viewBox="0 0 48 48" style={{ animation: 'spin-slow 8s linear infinite', flexShrink: 0 }}>
+            <text y="36" fontSize="40" textAnchor="middle" x="24">🎵</text>
+          </svg>
+          <div className="text-title">반복기호의 마블</div>
+          <div style={{ fontSize: 'clamp(0.55rem,1.2vw,0.8rem)', color: 'rgba(255,255,255,0.5)', letterSpacing:'0.06em' }}>
+            MUSIC MARBLE
           </div>
         </div>
       </div>

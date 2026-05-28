@@ -7,8 +7,11 @@ import { EventOverlay } from './components/EventOverlay';
 import { LearningCard } from './components/LearningCard';
 import { EventLog } from './components/EventLog';
 import { PlayerStatusBar } from './components/PlayerStatusBar';
+import { BackgroundParticles } from './components/BackgroundParticles';
 import type { CellKind } from './game/types';
 import './styles/globals.css';
+import './styles/board.css';
+import './styles/animations.css';
 
 export default function App() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
@@ -17,14 +20,31 @@ export default function App() {
   const [showCard, setShowCard] = useState(false);
   const [playerCount, setPlayerCount] = useState(2);
 
-  // Show learning card after event resolves
   useEffect(() => {
     if (state.activeEvent && state.activeEvent.type !== 'NONE') {
       setLastEventKind(state.activeEvent.kind);
     }
   }, [state.activeEvent]);
 
-  // Keyboard controls
+  // confetti on game over
+  useEffect(() => {
+    if (state.phase !== 'GAME_OVER') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js';
+    script.onload = () => {
+      const confetti = (window as unknown as { confetti: (opts: object) => void }).confetti;
+      const end = Date.now() + 4000;
+      const frame = () => {
+        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ffd700','#ff4d6d','#4d9fff'] });
+        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ffd700','#ff4d6d','#4d9fff'] });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      };
+      frame();
+    };
+    document.head.appendChild(script);
+  }, [state.phase]);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') { e.preventDefault(); stepForward(); }
@@ -47,28 +67,23 @@ export default function App() {
   const targetIndex = state.activeEvent?.targetIndex;
 
   return (
-    <div style={{ minHeight: '100vh', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+    <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+      <BackgroundParticles />
+
       {/* Title */}
-      <h1 className="title">
-        {'반복기호의 마블'.split('').map((ch, i) => (
-          <span key={i}>{ch}</span>
-        ))}
+      <h1 style={{ textAlign: 'center', padding: '0.3rem 0' }}>
+        <span className="text-title">반복기호의 마블</span>
       </h1>
 
-      {/* Player count selector (only when READY at start) */}
+      {/* Player count selector */}
       {state.turnCount === 0 && state.phase === 'READY' && (
         <div style={{ textAlign: 'center', display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
-          <span style={{ fontWeight: 700 }}>플레이어 수:</span>
+          <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>플레이어:</span>
           {[1, 2, 3, 4].map(n => (
             <button
               key={n}
+              className={`count-btn ${playerCount === n ? 'count-btn--active' : 'count-btn--inactive'}`}
               onClick={() => { setPlayerCount(n); dispatch({ type: 'SET_PLAYER_COUNT', count: n }); }}
-              style={{
-                padding: '0.3em 0.9em',
-                background: playerCount === n ? 'var(--primary)' : '#eee',
-                color: playerCount === n ? 'white' : 'var(--ink)',
-                fontWeight: 700
-              }}
             >
               {n}명
             </button>
@@ -81,36 +96,24 @@ export default function App() {
 
       {/* Main layout */}
       <div className="game-layout" style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-        {/* Board */}
-        <div style={{ flex: 1, minWidth: 0 }}>
+        {/* Board section */}
+        <div className="board-section" style={{ flex: 1, minWidth: 0 }}>
           <Board
             players={state.players}
             currentPlayer={state.currentPlayer}
             targetIndex={targetIndex}
           />
-          {/* Mobile step button */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '0.5rem' }}>
-            <button
-              className="step-btn step-btn-mobile"
-              onClick={stepForward}
-              disabled={state.phase !== 'WAITING_STEP' || state.remainingSteps <= 0}
-              aria-label="한 칸 이동"
-              style={{ display: 'none' }}
-            >
-              ➡️ 한 칸 이동 (남은: {state.remainingSteps})
-            </button>
-          </div>
         </div>
 
         {/* Side panel */}
-        <div style={{ width: '200px', display: 'flex', flexDirection: 'column', gap: '0.8rem', flexShrink: 0 }}>
+        <div style={{ width: '210px', display: 'flex', flexDirection: 'column', gap: '0.8rem', flexShrink: 0 }}>
           <DicePanel state={state} onRoll={startRoll} onStep={stepForward} />
 
-          {/* Learning card trigger */}
           {lastEventKind && !showCard && state.phase === 'READY' && (
             <button
+              className="btn-3d btn-gold"
               onClick={() => setShowCard(true)}
-              style={{ background: 'var(--secondary)', color: 'var(--ink)', fontSize: '0.85rem' }}
+              style={{ fontSize: '0.82rem', padding: '0.55em 1em' }}
             >
               📚 기호 카드 보기
             </button>
@@ -122,8 +125,13 @@ export default function App() {
           <EventLog logs={state.eventLog} />
 
           <button
+            className="btn-3d"
             onClick={handleReset}
-            style={{ background: '#f5f5f5', color: '#666', fontSize: '0.8rem' }}
+            style={{
+              background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)',
+              fontSize: '0.78rem', padding: '0.5em 1em',
+              boxShadow: '0 3px 0 rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)',
+            }}
           >
             🔄 게임 리셋
           </button>
@@ -133,28 +141,16 @@ export default function App() {
       {/* Event overlay */}
       <EventOverlay event={state.activeEvent} onDismiss={handleDismissEvent} />
 
-      {/* Game over screen */}
+      {/* Victory screen */}
       {state.phase === 'GAME_OVER' && (
-        <div style={{
-          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-          zIndex: 200
-        }}>
-          <div style={{
-            background: 'white', borderRadius: '20px', padding: '2rem 3rem',
-            textAlign: 'center', animation: 'overlay-pop 0.5s cubic-bezier(.34,1.56,.64,1)'
-          }}>
-            <div style={{ fontSize: '4rem' }}>🎉</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--primary)', margin: '0.5rem 0' }}>
-              {state.players[state.currentPlayer]?.name} 완주!
-            </div>
-            <div style={{ fontSize: '1rem', color: '#666', marginBottom: '1rem' }}>
-              음악 기호를 모두 배웠어요!
-            </div>
-            <button
-              onClick={handleReset}
-              style={{ background: 'var(--primary)', color: 'white', fontSize: '1.1rem' }}
-            >
+        <div className="victory-backdrop">
+          <div className="victory-modal">
+            <div className="victory-crown">👑</div>
+            <div className="victory-title">완주!</div>
+            <div className="victory-name">{state.players[state.currentPlayer]?.name}</div>
+            <div className="victory-sub">🎵 모든 음악 기호를 마스터했어요!</div>
+            <div className="victory-stats">총 {state.turnCount}턴 소요</div>
+            <button className="btn-3d btn-gold victory-btn" onClick={handleReset}>
               🔄 다시 하기
             </button>
           </div>

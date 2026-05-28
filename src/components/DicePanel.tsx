@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { GameState } from '../game/types';
+import { Dice3D } from './Dice3D';
 
 interface Props {
   state: GameState;
@@ -7,7 +8,7 @@ interface Props {
   onStep: () => void;
 }
 
-const DICE_FACES = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+const PLAYER_EMOJI = ['🐱','🐶','🐸','🐻'];
 
 export const DicePanel: React.FC<Props> = ({ state, onRoll, onStep }) => {
   const { phase, diceValue, remainingSteps, players, currentPlayer } = state;
@@ -18,9 +19,7 @@ export const DicePanel: React.FC<Props> = ({ state, onRoll, onStep }) => {
   useEffect(() => {
     if (phase === 'ROLLING') {
       setRolling(true);
-      const interval = setInterval(() => {
-        setDisplayValue(Math.floor(Math.random() * 6) + 1);
-      }, 80);
+      const interval = setInterval(() => setDisplayValue(Math.floor(Math.random() * 6) + 1), 80);
       return () => clearInterval(interval);
     } else {
       setRolling(false);
@@ -32,67 +31,40 @@ export const DicePanel: React.FC<Props> = ({ state, onRoll, onStep }) => {
   const canStep = phase === 'WAITING_STEP' && remainingSteps > 0;
 
   return (
-    <div className="control-panel">
-      {/* Current player indicator */}
-      <div style={{
-        background: player.color,
-        color: 'white',
-        borderRadius: '999px',
-        padding: '0.4em 1em',
-        fontWeight: 900,
-        textAlign: 'center',
-        fontSize: '0.9rem'
-      }}>
-        {player.name}의 차례
+    <div className="hud-panel">
+      <div className="hud-player-row">
+        <div className="hud-avatar" style={{ background: player.color }}>
+          {PLAYER_EMOJI[player.id] ?? '⭐'}
+        </div>
+        <div className="hud-player-info">
+          <span className="hud-player-name">{player.name}</span>
+          <span className="hud-player-pos">📍 {player.position}번 칸</span>
+        </div>
+        {player.skipTurns > 0 && (
+          <div className="hud-skip-badge">⏸️ ×{player.skipTurns}</div>
+        )}
       </div>
 
-      {/* Dice display */}
-      <div className={`dice-cube ${rolling ? 'dice-cube--rolling' : ''}`}>
-        {diceValue !== null || rolling
-          ? DICE_FACES[displayValue - 1]
-          : '🎲'}
+      <div className="hud-dice-row">
+        <Dice3D value={displayValue} rolling={rolling} />
+        {remainingSteps > 0 && (
+          <div className="hud-steps">
+            <span className="hud-steps__num">{remainingSteps}</span>
+            <span className="hud-steps__label">칸 남음</span>
+          </div>
+        )}
       </div>
 
-      {/* Remaining steps */}
-      {remainingSteps > 0 && (
-        <div className="remaining-steps">
-          남은 이동: {remainingSteps}칸
-        </div>
-      )}
+      {canStep && <div className="hud-hint">→ 버튼으로 한 칸씩 이동하세요</div>}
 
-      {/* Hint */}
-      {canStep && (
-        <div style={{ fontSize: '0.78rem', color: '#666', textAlign: 'center' }}>
-          → 버튼으로 한 칸씩 이동하세요
-        </div>
-      )}
-
-      {/* Roll button */}
-      <button
-        className="dice-btn"
-        onClick={onRoll}
-        disabled={!canRoll}
-        aria-label="주사위 굴리기"
-      >
-        🎲 주사위 굴리기
-      </button>
-
-      {/* Step button */}
-      <button
-        className="step-btn"
-        onClick={onStep}
-        disabled={!canStep}
-        aria-label="한 칸 이동"
-      >
-        ➡️ 한 칸 이동
-      </button>
-
-      {/* Skip info */}
-      {player.skipTurns > 0 && (
-        <div style={{ fontSize: '0.8rem', color: '#ef476f', textAlign: 'center', fontWeight: 700 }}>
-          ⏸️ 페르마타 남은 쉬기: {player.skipTurns}번
-        </div>
-      )}
+      <div className="hud-btn-row">
+        <button className="btn-3d btn-gold hud-btn" onClick={onRoll} disabled={!canRoll} aria-label="주사위 굴리기">
+          🎲 주사위
+        </button>
+        <button className="btn-3d btn-green hud-btn" onClick={onStep} disabled={!canStep} aria-label="한 칸 이동">
+          ➡️ 이동
+        </button>
+      </div>
     </div>
   );
 };
